@@ -22,9 +22,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/users',"userController@allUser");
 
 //Auth
-Route::get('/signin',"userController@signin");
-Route::get('/verifyAccount',"userController@verifyAccount");
-Route::get('/updateProfile',"userController@updateProfile");
+Route::post('/signin',"userController@signin");
+Route::post('/verifyAccount',"userController@verifyAccount");
+Route::post('/updateProfile',"userController@updateProfile");
 
 
 
@@ -33,6 +33,8 @@ Route::get('/home',"HomeController@getHomePage");
 
 
 //Categories
+
+Route::get('/addCategory',"CategoryController@addCategory");
 Route::get('/getCategories',"CategoryController@getCategories");
 Route::get('/getCategoryItems',"CategoryController@getCategoryItems");
 Route::get('/getItemDetails',"CategoryController@getItemDetails");
@@ -41,10 +43,10 @@ Route::get('/addItemToBag',"CategoryController@addItemToBag");
 
 
 //Offers
-Route::get('/getFavoriteList',"OffersController@getFavoriteList");
+Route::get('/getOffersList',"OffersController@getOffersList");
 
 
 //Bag 
-Route::get('/getBagItems',"BagController@getFavoriteList");
+Route::get('/getBagItems',"BagController@getBagItems");
 Route::get('/updateBagItem',"BagController@updateBagItem");
 

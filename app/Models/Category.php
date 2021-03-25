@@ -14,4 +14,11 @@ class Category extends Model
     ];
     public $timestamps = false ;
     protected $primaryKey = 'id';
+
+
+
+    public function image()
+    {
+        return $this->belongsTo('App\Models\Image');
+    }
 }

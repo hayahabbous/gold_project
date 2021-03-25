@@ -6,5 +6,7 @@ use Illuminate\Http\Request;
 
 class OffersController extends Controller
 {
-    //
+    public function getOffersList() {
+        return "getOffersList";
+    }
 }
