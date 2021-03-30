@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Messaeg extends Model
+class GoldPrice extends Model
 {
     use HasFactory;
-    protected $table = 'gold_messages';
+
+    protected $table = 'gold_price';
     protected $fillable = [
         
     ];

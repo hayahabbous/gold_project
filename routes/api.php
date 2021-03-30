@@ -30,15 +30,16 @@ Route::post('/updateProfile',"userController@updateProfile");
 
 //Home
 Route::get('/home',"HomeController@getHomePage");
-
+Route::get('/getGoldPrice',"HomeController@getGoldPrice");
 
 //Categories
 
 Route::get('/addCategory',"CategoryController@addCategory");
 Route::get('/getCategories',"CategoryController@getCategories");
-Route::get('/getCategoryItems',"CategoryController@getCategoryItems");
-Route::get('/getItemDetails',"CategoryController@getItemDetails");
-Route::get('/likeItem',"CategoryController@likeItem");
+Route::get('/getCategoryItems/{id}',"CategoryController@getCategoryItems");
+Route::get('/getItemDetails/{id}',"CategoryController@getItemDetails");
+Route::post('/likeItem',"CategoryController@likeItem");
+Route::post('/getLikedItems',"CategoryController@getLikedItems");
 Route::get('/addItemToBag',"CategoryController@addItemToBag");
 
 

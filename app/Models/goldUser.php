@@ -16,4 +16,8 @@ class goldUser extends Model
     ];
     public $timestamps = false ;
     protected $primaryKey = 'id';
+
+    public function items() {
+        return $this->belongsToMany(GoldItem::class ,"gold_likes" , "user_id" , "item_id"); 
+    }
 }
