@@ -5,20 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class orederItems extends Model
 {
     use HasFactory;
-    protected $table = 'gold_category';
+    protected $table = 'gold_order_item';
     protected $fillable = [
         
     ];
     public $timestamps = false ;
     protected $primaryKey = 'id';
 
-
-
-    public function images()
-    {
-        return $this->belongsTo(GoldImage::class , "image" , "image");
-    }
+    
 }

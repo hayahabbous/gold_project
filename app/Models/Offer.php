@@ -14,4 +14,9 @@ class Offer extends Model
     ];
     public $timestamps = false ;
     protected $primaryKey = 'id';
+
+
+    public function images() {
+        return $this->belongsTo(GoldImage::class , "image_id" , "image");
+    }
 }
