@@ -33,14 +33,23 @@ class orderController extends Controller
 
         //get those items and insert into database 
 
-        $array = $data["items"];
+
+        $ids = explode(',', $data["ids"]);
+        $counts = explode(',', $data["counts"]);
 
 
+        //$array = $data["items"];
 
-        foreach ($array as $i) {
+
+        //dd($ids);
+
+        foreach ($ids as $i) {
             //check if items exists in db
 
-            $item = GoldItem::where('id', '=', $i["id"])->first();
+            if ($i == "") {
+                continue;
+            }
+            $item = GoldItem::where('id', '=', $i)->first();
 
 
             if ($item == null) {
@@ -65,13 +74,19 @@ class orderController extends Controller
         $orderID = $order->id;
 
 
-        foreach ($array as $j) {
+        $loopCount = 0;
+        foreach ($ids as $j) {
+
+            if ($j == "") {
+                continue;
+            }
 
             $newRecord = new orederItems();
             $newRecord->order_id = $orderID;
-            $newRecord->item_id = $j["id"];
-            $newRecord->count =  $j["count"];
+            $newRecord->item_id = $j;
+            $newRecord->count =  $counts[$loopCount];
 
+            $loopCount++;
 
             $newRecord->save();
         }
@@ -101,10 +116,18 @@ class orderController extends Controller
 
         //get those items and insert into database 
 
-        $array = $data["offers"];
+        //$array = $data["offers"];
 
 
+        $item = Offer::where('id', '=', $data["id"])->first();
 
+
+        if ($item == null) {
+
+            return response()->json(["data" => [], "message" => "item not found", "Status" => "Error"]);
+        }
+
+        /*
         foreach ($array as $i) {
             //check if items exists in db
 
@@ -116,7 +139,7 @@ class orderController extends Controller
                 return response()->json(["data" => [], "message" => "item not found", "Status" => "Error"]);
                 break;
             }
-        }
+        }*/
 
 
         //insert new order
@@ -133,18 +156,29 @@ class orderController extends Controller
         $orderID = $order->id;
 
 
+
+        $newRecord = new orederItems();
+        $newRecord->order_id = $orderID;
+        $newRecord->offer_id = $data["id"];
+        $newRecord->item_id = null;
+        $newRecord->count =  "0";
+
+
+        $newRecord->save();
+
+        /*
         foreach ($array as $j) {
 
             $newRecord = new orederItems();
             $newRecord->order_id = $orderID;
             $newRecord->offer_id = $j["id"];
             $newRecord->item_id = null;
-            $newRecord->count =  $j["count"];
+            $newRecord->count =  "0";
 
 
             $newRecord->save();
         }
-
+*/
 
 
         return Response()->json(["data" => $newOrder->ref_id, "code" => 200, "status" => "Success"]);
@@ -163,7 +197,7 @@ class orderController extends Controller
         }
 
         $orders = order::where("user_id", $user->id)->get();
-     
+
         $allArray = [];
         $allOffersArray = [];
 
@@ -175,7 +209,7 @@ class orderController extends Controller
             $offers = $o->offers;
 
 
-            foreach($items as $r) {
+            foreach ($items as $r) {
 
 
                 $r->relatedImage = "images/" . $r->images->image;
@@ -188,7 +222,7 @@ class orderController extends Controller
                 $newItem->weight = $r->weight;
                 $newItem->price = $r->price;
                 $newItem->relatedImage = $r->relatedImage;
-                
+
 
                 $matchThese = ['order_id' => $o->id, 'item_id' => $r->id];
                 $single = orederItems::where($matchThese)->first();
@@ -199,7 +233,7 @@ class orderController extends Controller
                 array_push($finalArray, $newItem);
             }
 
-            foreach($offers as $f){
+            foreach ($offers as $f) {
 
                 $f->relatedImage = "images/" . $f->images->image;
 
@@ -211,7 +245,7 @@ class orderController extends Controller
                 $newItem->weight = $f->weight;
                 $newItem->price = $f->price;
                 $newItem->relatedImage = $f->relatedImage;
-                
+
 
                 $matchThese = ['order_id' => $o->id, 'offer_id' => $f->id];
                 $single = orederItems::where($matchThese)->first();
@@ -222,22 +256,20 @@ class orderController extends Controller
                 array_push($finalOffersArray, $newItem);
             }
 
-            
-            
-        
-            if(count($finalArray) > 0) {
+
+
+
+            if (count($finalArray) > 0) {
 
                 array_push($allArray, $finalArray);
             }
-            if(count($finalOffersArray) > 0) {
+            if (count($finalOffersArray) > 0) {
 
                 array_push($allOffersArray, $finalOffersArray);
             }
-            
-
         }
 
-        return Response()->json(["data" => ["items" => $allArray  , "offers" => $allOffersArray], "code" => 200, "status" => "Success"]);
+        return Response()->json(["data" => ["items" => $allArray, "offers" => $allOffersArray], "code" => 200, "status" => "Success"]);
     }
 
     function generateRef()
