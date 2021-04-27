@@ -57,4 +57,6 @@ Route::post('/registerOrder' , "orderController@registerOrder");
 Route::post('/registerOrderOffer' , "orderController@registerOrderOffer");
 Route::post('/getOrders' , "orderController@getOrders");
 
+//message
+Route::post('/submitMessage' , "customerServiceController@submitMessage");
 

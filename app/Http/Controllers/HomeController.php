@@ -109,15 +109,19 @@ class HomeController extends Controller
 
     public function getGoldPrice()
     {
-        $c = new CategoryController();
+       $accessKey = 'xvns550vsdxhj1kyikwte1k4fy320b8ki23nb41t3a1p318gqxsz5o7twnrp';
+       $base = 'KWD';
+       $symbols = 'XAU';
 
 
 
 
+
+       $url = "https://metals-api.com/api/latest?access_key=".$accessKey."&base=".$base."&symbols=".$symbols;
 
         $response = Http::withHeaders([
-            'x-access-token' => 'goldapi-fyow2xukmul59lr-io'
-        ])->get('https://www.goldapi.io/api/XAU/USD/20210326')->json();
+            'x-access-token' => ''
+        ])->get($url)->json();
 
 
         return $response;

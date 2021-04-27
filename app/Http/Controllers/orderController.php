@@ -25,7 +25,7 @@ class orderController extends Controller
 
         //ensure if user exist
 
-        $user = goldUser::where('token', '=', $data["token"])->first();
+        $user = goldUser::where('token', '=', $request->input("token"))->first();
 
         if ($user == null) {
             return Response()->json(["data" => "user not found", "code" => -300, "status" => "Error"]);
@@ -34,8 +34,8 @@ class orderController extends Controller
         //get those items and insert into database 
 
 
-        $ids = explode(',', $data["ids"]);
-        $counts = explode(',', $data["counts"]);
+        $ids = explode(',', $request->input("ids"));
+        $counts = explode(',', $request->input("counts"));
 
 
         //$array = $data["items"];
@@ -108,7 +108,7 @@ class orderController extends Controller
 
         //ensure if user exist
 
-        $user = goldUser::where('token', '=', $data["token"])->first();
+        $user = goldUser::where('token', '=', $request->input("token"))->first();
 
         if ($user == null) {
             return Response()->json(["data" => "user not found", "code" => -300, "status" => "Error"]);
@@ -119,7 +119,7 @@ class orderController extends Controller
         //$array = $data["offers"];
 
 
-        $item = Offer::where('id', '=', $data["id"])->first();
+        $item = Offer::where('id', '=', $request->input("id"))->first();
 
 
         if ($item == null) {
@@ -159,7 +159,7 @@ class orderController extends Controller
 
         $newRecord = new orederItems();
         $newRecord->order_id = $orderID;
-        $newRecord->offer_id = $data["id"];
+        $newRecord->offer_id = $request->input("id");
         $newRecord->item_id = null;
         $newRecord->count =  "0";
 
